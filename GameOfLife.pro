@@ -14,9 +14,13 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    lifewindow.cpp
+    lifewindow.cpp \
+    lifegrid.cpp \
+    lifenode.cpp
 
 HEADERS  += mainwindow.h \
-    lifewindow.h
+    lifewindow.h \
+    lifegrid.h \
+    lifenode.h
 
 FORMS    += mainwindow.ui
