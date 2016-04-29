@@ -19,3 +19,8 @@ void MainWindow::on_pushButton_clicked()
 {
     ui->openGLWidget->processNextStep();
 }
+
+void MainWindow::on_killButton_clicked()
+{
+    ui->openGLWidget->killAllNodes();
+}

@@ -3,7 +3,7 @@
 #include "lifegrid.h"
 #include "QDebug"
 
-int mult = 10;
+int mult = 2;
 
 LifeWindow::LifeWindow(QWidget *parent) : QOpenGLWidget(parent)
 {
@@ -62,7 +62,7 @@ void LifeWindow::processNextStep()
         if(checkW(grid[i])){count++;};
         if(checkNW(grid[i])){count++;};
 
-        if(grid[i]){
+        if(grid[i]->getState()){
             if(count < 2 || count > 3){
                 grid[i]->setNextState(false);
             }else{
@@ -74,9 +74,15 @@ void LifeWindow::processNextStep()
             }
         }
     }
-    qDebug() << "seconds stage";
     for(int i =0;i<size;i++){
         grid[i]->setState(grid[i]->getNextState());
+    }
+}
+
+void LifeWindow::killAllNodes()
+{
+    for(int i =0;i<grid.size();i++){
+        grid[i]->setState(false);
     }
 }
 bool LifeWindow::checkN(LifeNode* node)
@@ -138,7 +144,7 @@ bool LifeWindow::checkSE(LifeNode* node)
 
 bool LifeWindow::checkS(LifeNode* node)
 {
-    qDebug() << "S";
+
     int nIndex = LifeGrid::coordToIndex(node->getXPos(),node->getYPos()+1);
 
     if(nIndex>grid.size()-1){return false;}
@@ -193,4 +199,19 @@ bool LifeWindow::checkNW(LifeNode* node)
     }else{
         return false;
     }
+}
+
+void LifeWindow::mousePressEvent(QMouseEvent *event)
+{
+    double x = event->x();
+    double y = event->y();
+    double xRatio = (double)x/width();
+    double yRatio = (double)y/height();
+    int xPos=(int)LifeGrid::getGridSizeX()*xRatio;
+    int yPos=(int)LifeGrid::getGridSizeY()*yRatio;
+
+    int index = LifeGrid::coordToIndex(xPos,yPos);
+    grid[index]->setState(!grid[index]->getState());
+    //width()
+
 }

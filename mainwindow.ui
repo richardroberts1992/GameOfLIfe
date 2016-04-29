@@ -91,6 +91,19 @@
       <string>Next Step</string>
      </property>
     </widget>
+    <widget class="QPushButton" name="killButton">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>280</y>
+       <width>93</width>
+       <height>28</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Kill All</string>
+     </property>
+    </widget>
    </widget>
   </widget>
  </widget>

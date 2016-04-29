@@ -3,6 +3,8 @@
 #include <QOpenGLWidget>
 #include <QVector>
 #include <QTimer>
+#include <QWidget>
+#include <QMouseEvent>
 #include "lifeNode.h"
 class LifeWindow : public QOpenGLWidget
 {
@@ -17,6 +19,8 @@ public:
 
     //processNextStep
     void processNextStep();
+
+    void killAllNodes();
 
 private:
     QTimer timer;
@@ -35,6 +39,11 @@ private:
     bool checkSW(LifeNode* node);
     bool checkW(LifeNode* node);
     bool checkNW(LifeNode* node);
+
+protected:
+    void mousePressEvent(QMouseEvent *event);
+
+
 };
 
 #endif // LIFEWINDOW_H
