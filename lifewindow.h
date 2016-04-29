@@ -6,7 +6,7 @@ class LifeWindow : public QOpenGLWidget
 {
     Q_OBJECT
 public:
-    LifeWindow();
+    explicit LifeWindow(QWidget *parent = 0);
 
     void paintGL();
     void initializeGL();
