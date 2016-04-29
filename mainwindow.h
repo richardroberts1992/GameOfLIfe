@@ -20,6 +20,8 @@ private slots:
 
     void on_killButton_clicked();
 
+    void on_randomButton_clicked();
+
 private:
     Ui::MainWindow *ui;
 };

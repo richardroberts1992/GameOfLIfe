@@ -21,6 +21,7 @@ public:
     void processNextStep();
 
     void killAllNodes();
+    void randomlyPopulateNodes();
 
 private:
     QTimer timer;

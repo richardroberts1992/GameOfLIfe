@@ -94,14 +94,27 @@
     <widget class="QPushButton" name="killButton">
      <property name="geometry">
       <rect>
-       <x>20</x>
-       <y>280</y>
-       <width>93</width>
+       <x>0</x>
+       <y>320</y>
+       <width>141</width>
        <height>28</height>
       </rect>
      </property>
      <property name="text">
       <string>Kill All</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="randomButton">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>350</y>
+       <width>141</width>
+       <height>28</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Random</string>
      </property>
     </widget>
    </widget>

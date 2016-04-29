@@ -24,3 +24,8 @@ void MainWindow::on_killButton_clicked()
 {
     ui->openGLWidget->killAllNodes();
 }
+
+void MainWindow::on_randomButton_clicked()
+{
+    ui->openGLWidget->randomlyPopulateNodes();
+}

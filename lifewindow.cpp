@@ -16,7 +16,6 @@ LifeWindow::LifeWindow(QWidget *parent) : QOpenGLWidget(parent)
     int size = LifeGrid::getGridSizeX()*LifeGrid::getGridSizeY();
     for(int i=0;i<size;i++){
         bool alive=false;
-
         if(rand() < (RAND_MAX/2)){alive=true;}
         LifeNode *node = new LifeNode(i,alive);
         grid.push_back(node);
@@ -76,6 +75,7 @@ void LifeWindow::processNextStep()
     }
     for(int i =0;i<size;i++){
         grid[i]->setState(grid[i]->getNextState());
+        grid[i]->setNextState(false);
     }
 }
 
@@ -83,6 +83,18 @@ void LifeWindow::killAllNodes()
 {
     for(int i =0;i<grid.size();i++){
         grid[i]->setState(false);
+        grid[i]->setNextState(false);
+    }
+
+}
+
+void LifeWindow::randomlyPopulateNodes()
+{
+    for(int i =0;i<grid.size();i++){
+        bool alive=false;
+        if(rand() < (RAND_MAX/2)){alive=true;}
+        grid[i]->setState(alive);
+        grid[i]->setNextState(false);
     }
 }
 bool LifeWindow::checkN(LifeNode* node)
