@@ -3,7 +3,7 @@
 #include "lifegrid.h"
 #include "QDebug"
 
-int mult = 10;
+int mult = 2;
 
 LifeWindow::LifeWindow(QWidget *parent) : QOpenGLWidget(parent)
 {
@@ -47,3 +47,153 @@ void LifeWindow::drawGrid()
     }
 }
 
+void LifeWindow::processNextStep()
+{
+
+    int size = grid.size();
+    for(int i =0;i<size;i++){
+
+        int count=0;
+        if(checkN(grid[i])){count++;};
+        if(checkNE(grid[i])){count++;};
+        if(checkE(grid[i])){count++;};
+        if(checkSE(grid[i])){count++;};
+        if(checkS(grid[i])){count++;};
+        if(checkSW(grid[i])){count++;};
+        if(checkW(grid[i])){count++;};
+        if(checkNW(grid[i])){count++;};
+
+        if(grid[i]){
+            if(count < 2 || count > 3){
+                grid[i]->setNextState(false);
+            }else{
+               grid[i]->setNextState(true);
+            }
+        }else{
+            if(count==3){
+               grid[i]->setNextState(true);
+            }
+        }
+    }
+    qDebug() << "seconds stage";
+    for(int i =0;i<size;i++){
+        grid[i]->setState(grid[i]->getNextState());
+    }
+}
+bool LifeWindow::checkN(LifeNode* node)
+{
+     qDebug() << "N";
+     int nIndex = LifeGrid::coordToIndex(node->getXPos(),node->getYPos()-1);
+     qDebug() << "2";
+     if(nIndex>grid.size()){return false;}
+     qDebug() << "3";
+     LifeNode* n = grid[nIndex];
+     n->setState(true);
+     qDebug() << n->getState();
+     if(grid[nIndex]->getState()){
+         qDebug() << "T";
+         return true;
+     }else{
+         qDebug() << "F";
+         return false;
+     }
+
+}
+
+bool LifeWindow::checkNE(LifeNode* node)
+{
+    qDebug() << "NE";
+    int nIndex = LifeGrid::coordToIndex(node->getXPos()+1,node->getYPos()-1);
+
+    if(nIndex>grid.size()){return false;}
+
+    if(grid[nIndex]->getState()){
+        return true;
+    }else{
+        return false;
+    }
+}
+
+bool LifeWindow::checkE(LifeNode* node)
+{
+    qDebug() << "E";
+    int nIndex = LifeGrid::coordToIndex(node->getXPos()+1,node->getYPos());
+
+    if(nIndex>grid.size()){return false;}
+
+    if(grid[nIndex]->getState()){
+        return true;
+    }else{
+        return false;
+    }
+}
+
+bool LifeWindow::checkSE(LifeNode* node)
+{
+    qDebug() << "SE";
+    int nIndex = LifeGrid::coordToIndex(node->getXPos()+1,node->getYPos()+1);
+
+    if(nIndex>grid.size()){return false;}
+
+    if(grid[nIndex]->getState()){
+        return true;
+    }else{
+        return false;
+    }
+}
+
+bool LifeWindow::checkS(LifeNode* node)
+{
+    qDebug() << "S";
+    int nIndex = LifeGrid::coordToIndex(node->getXPos(),node->getYPos()+1);
+
+    if(nIndex>grid.size()){return false;}
+
+    if(grid[nIndex]->getState()){
+        return true;
+    }else{
+        return false;
+    }
+}
+
+bool LifeWindow::checkSW(LifeNode* node)
+{
+    qDebug() << "SW";
+    int nIndex = LifeGrid::coordToIndex(node->getXPos()-1,node->getYPos()+1);
+
+    if(nIndex>grid.size()){return false;}
+
+    if(grid[nIndex]->getState()){
+        return true;
+    }else{
+        return false;
+    }
+}
+
+bool LifeWindow::checkW(LifeNode* node)
+{
+    qDebug() << "W";
+    int nIndex = LifeGrid::coordToIndex(node->getXPos()-1,node->getYPos());
+
+    if(nIndex>grid.size()){return false;}
+
+    if(grid[nIndex]->getState()){
+        return true;
+    }else{
+        return false;
+    }
+}
+
+bool LifeWindow::checkNW(LifeNode* node)
+{
+    qDebug() << "NW";
+    int nIndex = LifeGrid::coordToIndex(node->getXPos()-1,node->getYPos()-1);
+
+    if(nIndex>grid.size()){return false;}
+
+    if(grid[nIndex]->getState()){
+        return true;
+    }else{
+        return false;
+    }
+}

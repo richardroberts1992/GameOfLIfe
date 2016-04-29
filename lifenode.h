@@ -2,7 +2,6 @@
 #define LIFENODE_H
 #include "lifegrid.h"
 #include "GL/freeglut.h"
-
 class LifeNode
 {
 public:
@@ -15,6 +14,7 @@ public:
     void setDead();
     void setAlive();
     bool getState();
+    void setState(bool value);
     int getListIndex() const;
     void setListIndex(int value);
 
@@ -29,16 +29,10 @@ public:
 
     void populateGeometry();
     void drawLifeNode();
+    bool getNextState() const;
+    void setNextState(bool value);
 
-    //Neighbour Check
-    bool checkN();
-    bool checkNE();
-    bool checkE();
-    bool checkSE();
-    bool checkS();
-    bool checkSW();
-    bool checkW();
-    bool checkNW();
+
 
 private:
     double LX;
@@ -50,6 +44,7 @@ private:
     int xPos;
     int yPos;
     bool state;
+    bool nextState;
 
 };
 

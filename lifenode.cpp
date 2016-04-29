@@ -130,45 +130,22 @@ void LifeNode::drawLifeNode()
     }
 }
 
-
-bool LifeNode::checkN()
+bool LifeNode::getNextState() const
 {
-    return true;
+    return nextState;
 }
 
-bool LifeNode::checkNE()
+void LifeNode::setNextState(bool value)
 {
-    return true;
+    nextState = value;
 }
 
-bool LifeNode::checkE()
+void LifeNode::setState(bool value)
 {
-    return true;
+    state = value;
 }
 
-bool LifeNode::checkSE()
-{
-    return true;
-}
 
-bool LifeNode::checkS()
-{
-    return true;
-}
 
-bool LifeNode::checkSW()
-{
-    return true;
-}
-
-bool LifeNode::checkW()
-{
-    return true;
-}
-
-bool LifeNode::checkNW()
-{
-    return true;
-}
 
 

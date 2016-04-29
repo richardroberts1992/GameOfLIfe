@@ -15,12 +15,26 @@ public:
     void drawGrid();
     QVector<LifeNode*> grid;
 
+    //processNextStep
+    void processNextStep();
+
 private:
     QTimer timer;
     double SLX;
     double SRX;
     double SUY;
     double SLY;
+
+
+    //Neighbour Check
+    bool checkN(LifeNode* node);
+    bool checkNE(LifeNode* node);
+    bool checkE(LifeNode* node);
+    bool checkSE(LifeNode* node);
+    bool checkS(LifeNode* node);
+    bool checkSW(LifeNode* node);
+    bool checkW(LifeNode* node);
+    bool checkNW(LifeNode* node);
 };
 
 #endif // LIFEWINDOW_H
