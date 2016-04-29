@@ -32,7 +32,8 @@ public:
     bool getNextState() const;
     void setNextState(bool value);
 
-
+    bool state;
+    bool nextState;
 
 private:
     double LX;
@@ -43,8 +44,7 @@ private:
     int listIndex;
     int xPos;
     int yPos;
-    bool state;
-    bool nextState;
+
 
 };
 

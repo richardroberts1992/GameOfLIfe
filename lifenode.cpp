@@ -4,6 +4,7 @@ LifeNode::LifeNode(int index, bool stateIn)
 {
     xPos = LifeGrid::indexToXCoord(index);
     yPos = LifeGrid::indexToYCoord(index);
+    //qDebug() << "intex = " << index << "   x " << xPos << "  y "<<yPos;
     state=stateIn;
     listIndex = index;
     populateGeometry();
