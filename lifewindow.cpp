@@ -2,26 +2,18 @@
 #include <GL/freeglut.h>
 #include "lifegrid.h"
 #include "QDebug"
-
-int mult = 2;
+#include <QGL>
+#include <QOpenGLFunctions>
+#include <QGLFunctions>
 
 LifeWindow::LifeWindow(QWidget *parent) : QOpenGLWidget(parent)
 {
-
+    mult=2;
+    sliderTimerFrame=300;
     connect(&timer,SIGNAL(timeout()), this, SLOT(update()));
+    connect(&stepTimer,SIGNAL(timeout()), this, SLOT(processNextStep()));
     timer.start(100);
-    LifeGrid::setGridSizeX(16*mult);
-    LifeGrid::setGridSizeY(9*mult);
-    LifeGrid::setIncrement(10);
-    int size = LifeGrid::getGridSizeX()*LifeGrid::getGridSizeY();
-    for(int i=0;i<size;i++){
-        bool alive=false;
-        if(rand() < (RAND_MAX/2)){alive=true;}
-        LifeNode *node = new LifeNode(i,alive);
-        grid.push_back(node);
-    }
-    qDebug() << "Finished Setup";
-
+    setupGrid();
 }
 
 void LifeWindow::paintGL()
@@ -35,8 +27,10 @@ void LifeWindow::initializeGL()
     SRX = LifeGrid::getGridSizeX()*LifeGrid::getIncrement();
     SUY = 0;
     SLY = LifeGrid::getGridSizeY()*LifeGrid::getIncrement();
+
     glOrtho(SLX,SRX,SLY,SUY,1,-1);
-    glDisable(GL_DEPTH_TEST);
+
+
 }
 
 void LifeWindow::drawGrid()
@@ -44,6 +38,23 @@ void LifeWindow::drawGrid()
     for(int i =0;i<grid.size();i++){
         grid[i]->drawLifeNode();
     }
+}
+
+void LifeWindow::setupGrid()
+{
+    grid.clear();
+    LifeGrid::setGridSizeX(16*mult);
+    LifeGrid::setGridSizeY(9*mult);
+    LifeGrid::setIncrement(10);
+    int size = LifeGrid::getGridSizeX()*LifeGrid::getGridSizeY();
+    for(int i=0;i<size;i++){
+        bool alive=false;
+        if(rand() < (RAND_MAX/2)){alive=true;}
+        LifeNode *node = new LifeNode(i,alive);
+        grid.push_back(node);
+    }
+
+    initializeGL();
 }
 
 void LifeWindow::processNextStep()
@@ -79,6 +90,26 @@ void LifeWindow::processNextStep()
     }
 }
 
+int LifeWindow::getMult() const
+{
+    return mult;
+}
+
+void LifeWindow::setMult(int value)
+{
+    mult = value;
+}
+
+int LifeWindow::getSliderTimerFrame() const
+{
+    return sliderTimerFrame;
+}
+
+void LifeWindow::setSliderTimerFrame(int value)
+{
+    sliderTimerFrame = value;
+}
+
 void LifeWindow::killAllNodes()
 {
     for(int i =0;i<grid.size();i++){
@@ -96,6 +127,16 @@ void LifeWindow::randomlyPopulateNodes()
         grid[i]->setState(alive);
         grid[i]->setNextState(false);
     }
+}
+
+void LifeWindow::startTimer()
+{
+    stepTimer.start(sliderTimerFrame);
+}
+
+void LifeWindow::endTimer()
+{
+    stepTimer.stop();
 }
 bool LifeWindow::checkN(LifeNode* node)
 {

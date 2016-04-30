@@ -22,6 +22,14 @@ private slots:
 
     void on_randomButton_clicked();
 
+    void on_startTimerButton_clicked();
+
+    void on_endTimerButton_clicked();
+
+    void on_verticalSlider_sliderMoved(int position);
+
+    void on_spinBox_valueChanged(int arg1);
+
 private:
     Ui::MainWindow *ui;
 };

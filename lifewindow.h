@@ -4,6 +4,8 @@
 #include <QVector>
 #include <QTimer>
 #include <QWidget>
+#include <QGLFunctions>
+#include <QOpenGLBuffer>
 #include <QMouseEvent>
 #include "lifeNode.h"
 class LifeWindow : public QOpenGLWidget
@@ -17,14 +19,27 @@ public:
     void drawGrid();
     QVector<LifeNode*> grid;
 
-    //processNextStep
-    void processNextStep();
+    void setupGrid();
 
+    //processNextStep
     void killAllNodes();
     void randomlyPopulateNodes();
 
+    //Timer Functions
+    void startTimer();
+    void endTimer();
+    int getSliderTimerFrame() const;
+    void setSliderTimerFrame(int value);
+    int getMult() const;
+    void setMult(int value);
+
+public slots:
+    void processNextStep();
 private:
     QTimer timer;
+    QTimer stepTimer;
+    int sliderTimerFrame;
+    int mult;
     double SLX;
     double SRX;
     double SUY;
