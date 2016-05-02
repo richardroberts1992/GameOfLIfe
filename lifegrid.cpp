@@ -54,6 +54,8 @@ int LifeGrid::indexToYCoord(int index)
 
 int LifeGrid::coordToIndex(int xPosition, int yPosition)
 {
+    if(xPosition>gridSizeX || yPosition>gridSizeY){return -1;}
+
     int index = xPosition+(gridSizeX*yPosition);
     //qDebug() << "x " << xPosition << "    y " << yPosition << "    index " << index;
     return index;

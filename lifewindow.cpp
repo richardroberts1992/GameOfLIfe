@@ -49,7 +49,7 @@ void LifeWindow::setupGrid()
     int size = LifeGrid::getGridSizeX()*LifeGrid::getGridSizeY();
     for(int i=0;i<size;i++){
         bool alive=false;
-        if(rand() < (RAND_MAX/2)){alive=true;}
+        if(rand() <= (RAND_MAX/2)){alive=true;}
         LifeNode *node = new LifeNode(i,alive);
         grid.push_back(node);
     }
@@ -154,8 +154,13 @@ void LifeWindow::endTimer()
 bool LifeWindow::checkN(LifeNode* node)
 {
      int nIndex = LifeGrid::coordToIndex(node->getXPos(),node->getYPos()-1);
+
+     if(nIndex<0){
+        nIndex = LifeGrid::coordToIndex(node->getXPos(),LifeGrid::getGridSizeY());
+     }
+
      if(nIndex>grid.size()-1){return false;}
-     if(nIndex<0){return false;}
+
      if(grid[nIndex]->getState()){
          return true;
      }else{
@@ -168,8 +173,15 @@ bool LifeWindow::checkNE(LifeNode* node)
 {
     int nIndex = LifeGrid::coordToIndex(node->getXPos()+1,node->getYPos()-1);
 
+    if(nIndex<0){
+        int x = node->getXPos();
+        int y = node->getYPos();
+        if(node->getXPos()+1>LifeGrid::getGridSizeX()){x=0;}
+        if(node->getYPos()-1<0){y=LifeGrid::getGridSizeY();}
+        nIndex = LifeGrid::coordToIndex(x,y);
+    }
+
     if(nIndex>grid.size()-1){return false;}
-    if(nIndex<0){return false;}
 
     if(grid[nIndex]->getState()){
         return true;
@@ -183,8 +195,11 @@ bool LifeWindow::checkE(LifeNode* node)
 
     int nIndex = LifeGrid::coordToIndex(node->getXPos()+1,node->getYPos());
 
+    if(nIndex<0){
+        nIndex = LifeGrid::coordToIndex(0,node->getYPos());
+    }
+
     if(nIndex>grid.size()-1){return false;}
-    if(nIndex<0){return false;}
 
     if(grid[nIndex]->getState()){
         return true;
@@ -198,8 +213,15 @@ bool LifeWindow::checkSE(LifeNode* node)
 
     int nIndex = LifeGrid::coordToIndex(node->getXPos()+1,node->getYPos()+1);
 
+    if(nIndex<0){
+        int x = node->getXPos();
+        int y = node->getYPos();
+        if(node->getXPos()+1>LifeGrid::getGridSizeX()){x=0;}
+        if(node->getYPos()+1<LifeGrid::getGridSizeY()){y=0;}
+        nIndex = LifeGrid::coordToIndex(x,y);
+    }
+
     if(nIndex>grid.size()-1){return false;}
-    if(nIndex<0){return false;}
 
     if(grid[nIndex]->getState()){
         return true;
@@ -213,8 +235,12 @@ bool LifeWindow::checkS(LifeNode* node)
 
     int nIndex = LifeGrid::coordToIndex(node->getXPos(),node->getYPos()+1);
 
+
+    if(nIndex<0){
+        nIndex = LifeGrid::coordToIndex(node->getXPos(),0);
+    }
+
     if(nIndex>grid.size()-1){return false;}
-    if(nIndex<0){return false;}
 
     if(grid[nIndex]->getState()){
         return true;
@@ -227,8 +253,16 @@ bool LifeWindow::checkSW(LifeNode* node)
 {
     int nIndex = LifeGrid::coordToIndex(node->getXPos()-1,node->getYPos()+1);
 
+
+    if(nIndex<0){
+        int x = node->getXPos();
+        int y = node->getYPos();
+        if(node->getXPos()-1>0){x=LifeGrid::getGridSizeX();}
+        if(node->getYPos()+1<LifeGrid::getGridSizeY()){y=0;}
+        nIndex = LifeGrid::coordToIndex(x,y);
+    }
+
     if(nIndex>grid.size()-1){return false;}
-    if(nIndex<0){return false;}
 
     if(grid[nIndex]->getState()){
         return true;
@@ -242,8 +276,12 @@ bool LifeWindow::checkW(LifeNode* node)
 
     int nIndex = LifeGrid::coordToIndex(node->getXPos()-1,node->getYPos());
 
+
+    if(nIndex<0){
+        nIndex = LifeGrid::coordToIndex(LifeGrid::getGridSizeX(),node->getYPos());
+    }
+
     if(nIndex>grid.size()-1){return false;}
-    if(nIndex<0){return false;}
 
     if(grid[nIndex]->getState()){
         return true;
@@ -257,8 +295,17 @@ bool LifeWindow::checkNW(LifeNode* node)
 
     int nIndex = LifeGrid::coordToIndex(node->getXPos()-1,node->getYPos()-1);
 
+
+
+    if(nIndex<0){
+        int x = node->getXPos();
+        int y = node->getYPos();
+        if(node->getXPos()-1>0){x=LifeGrid::getGridSizeX();}
+        if(node->getYPos()-1<0){y=LifeGrid::getGridSizeY();}
+        nIndex = LifeGrid::coordToIndex(x,y);
+    }
+
     if(nIndex>grid.size()-1){return false;}
-    if(nIndex<0){return false;}
 
     if(grid[nIndex]->getState()){
         return true;
