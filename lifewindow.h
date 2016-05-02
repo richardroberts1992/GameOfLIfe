@@ -1,11 +1,25 @@
 #ifndef LIFEWINDOW_H
 #define LIFEWINDOW_H
 #include <QOpenGLWidget>
+#include <QApplication>
+#include <QMouseEvent>
+#include <ctime>
+#include <QGLFunctions>
+#include <QOpenGLBuffer>
+#include <QGLShaderProgram>
+#include <QGLBuffer>
+#include <QWidget>
+#include <GL/freeglut.h>
 #include <QVector>
 #include <QTimer>
 #include <QWidget>
 #include <QGLFunctions>
+#include <QtOpenGL>
 #include <QOpenGLBuffer>
+#include <QGL>
+#include <QOpenGLFunctions>
+#include <QGLFunctions>
+#include <QOpenGLFunctions_3_3_Core>
 #include <QMouseEvent>
 #include "lifeNode.h"
 class LifeWindow : public QOpenGLWidget
@@ -16,11 +30,12 @@ public:
 
     void paintGL();
     void initializeGL();
+    void resizeGL(int width, int height);
     void drawGrid();
     QVector<LifeNode*> grid;
 
     void setupGrid();
-
+    void setupView();
     //processNextStep
     void killAllNodes();
     void randomlyPopulateNodes();

@@ -1,14 +1,13 @@
 #include "lifewindow.h"
 #include <GL/freeglut.h>
+#include "GL/GL.h"
+#include <GL/glut.h>
 #include "lifegrid.h"
 #include "QDebug"
-#include <QGL>
-#include <QOpenGLFunctions>
-#include <QGLFunctions>
 
 LifeWindow::LifeWindow(QWidget *parent) : QOpenGLWidget(parent)
 {
-    mult=2;
+    mult=10;
     sliderTimerFrame=300;
     connect(&timer,SIGNAL(timeout()), this, SLOT(update()));
     connect(&stepTimer,SIGNAL(timeout()), this, SLOT(processNextStep()));
@@ -23,18 +22,19 @@ void LifeWindow::paintGL()
 
 void LifeWindow::initializeGL()
 {
-    SLX = 0;
-    SRX = LifeGrid::getGridSizeX()*LifeGrid::getIncrement();
-    SUY = 0;
-    SLY = LifeGrid::getGridSizeY()*LifeGrid::getIncrement();
+    setupView();
+}
 
-    glOrtho(SLX,SRX,SLY,SUY,1,-1);
-
-
+void LifeWindow::resizeGL(int width, int height)
+{
+    width;
+    height;
+    setupView();
 }
 
 void LifeWindow::drawGrid()
 {
+    setupView();
     for(int i =0;i<grid.size();i++){
         grid[i]->drawLifeNode();
     }
@@ -54,7 +54,20 @@ void LifeWindow::setupGrid()
         grid.push_back(node);
     }
 
-    initializeGL();
+    setupView();
+}
+
+void LifeWindow::setupView()
+{
+    glFlush();
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    SLX = 0;
+    SRX = LifeGrid::getGridSizeX()*LifeGrid::getIncrement();
+    SUY = 0;
+    SLY = LifeGrid::getGridSizeY()*LifeGrid::getIncrement();
+    gluOrtho2D(SLX,SRX,SLY,SUY);
+
 }
 
 void LifeWindow::processNextStep()
@@ -256,6 +269,7 @@ bool LifeWindow::checkNW(LifeNode* node)
 
 void LifeWindow::mousePressEvent(QMouseEvent *event)
 {
+
     double x = event->x();
     double y = event->y();
     double xRatio = (double)x/width();

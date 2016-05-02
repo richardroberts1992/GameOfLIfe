@@ -5,9 +5,9 @@
 #-------------------------------------------------
 
 QT       += core gui opengl
-
+QT += opengl
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
-
+CONFIG += c++11
 TARGET = GameOfLife
 TEMPLATE = app
 
