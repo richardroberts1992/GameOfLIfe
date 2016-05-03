@@ -22,6 +22,7 @@ void LifeWindow::paintGL()
 
 void LifeWindow::initializeGL()
 {
+
     setupView();
 }
 
@@ -34,6 +35,8 @@ void LifeWindow::resizeGL(int width, int height)
 
 void LifeWindow::drawGrid()
 {
+    glClearColor(0,0,0,1);
+    glClear(GL_COLOR_BUFFER_BIT);
     setupView();
     for(int i =0;i<grid.size();i++){
         grid[i]->drawLifeNode();
